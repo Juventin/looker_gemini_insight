@@ -12,14 +12,12 @@ def convert_data_to_markdown(data: List[Dict[str, Dict[str, Any]]]) -> str:
     Returns:
         str: Markdown table body.
     """
-    # Initialize the markdown body string
     markdown_body = ""
 
     # Get the headers from the first entry in the data list
     headers = list(data[0].keys())
 
     # Get the rows by extracting the 'value' field from each entry in the data list
-    # for each header
     rows = [[entry[key]['value'] for key in headers] for entry in data]
 
     # Construct the rows
@@ -42,15 +40,14 @@ def convert_fields_to_markdown(fields: List[Dict[str, Any]]) -> Tuple[str, str]:
                          The footer is a string representing the footer with field descriptions.
     """
 
-    # Initialize variables
-    markdown_header = "| "  # Header row
-    markdown_footer = "\n"  # Footer with field descriptions
-    header_labels = []  # List of header labels
+    markdown_header = "| "
+    markdown_footer = "\n"
+    header_labels = []
 
     # Extract header labels from dimensions
     for field in fields:
         label = field.get('label', '')
-        # Remove anything inside parentheses
+        # Remove anything after opening parentheses
         clean_label = label.split("(")[0].strip()
         header_labels.append(clean_label)
 
@@ -87,3 +84,5 @@ def convert_looker_data_to_markdown(data: Dict[str, Dict[str, Any]]) -> str:
     markdown_body = convert_data_to_markdown(data_list[-100:])
 
     return header + markdown_body + footer
+
+# Developed by Jeremy Juventin

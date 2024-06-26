@@ -1,3 +1,4 @@
 Flask==3.0.3
+flask-cors==3.0.10
 gunicorn
 google-cloud-aiplatform>=1.38

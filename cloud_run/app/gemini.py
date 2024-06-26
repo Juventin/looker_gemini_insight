@@ -15,12 +15,11 @@ def generate_summary(prompt):
     Returns:
         str: The generated summary.
     """
-    # Initialize Vertex AI client with project and location
     vertexai.init(project=PROJECT_ID, location="europe-west1")
-
-    # Create a GenerativeModel object with the specified model name
     model = GenerativeModel(model_name="gemini-1.0-pro-002")
 
-    # Generate the summary using the prompt and return the generated text
     response = model.generate_content(prompt)
     return response.text
+
+
+# Developed by Jeremy Juventin

@@ -1,10 +1,12 @@
 import os
 from flask import Flask, send_file, abort, request
+from flask_cors import CORS
 
 from app.format_data import convert_looker_data_to_markdown
 from app.gemini import generate_summary
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 @app.route('/')
@@ -21,11 +23,28 @@ def get_source():
         The JavaScript file 'looker_gemini_insight.js' if found.
         If the file is not found, returns a 404 error with a description.
     """
-    # Define the path to the JavaScript file
     file_path = 'visualization/looker_gemini_insight.js'
 
     try:
-        # Send the file as a response
+        return send_file(file_path)
+
+    # If the file is not found, raise a 404 error with a description
+    except FileNotFoundError:
+        abort(404, description="File not found")
+
+
+@app.route('/fortune_teller.png')
+def get_fortune_teller():
+    """
+    Endpoint to send the image 'fortune_teller.png' for visualization.
+
+    Returns:
+        The image 'fortune_teller.png' if found.
+        If the file is not found, returns a 404 error with a description.
+    """
+    file_path = 'visualization/fortune_teller.png'
+
+    try:
         return send_file(file_path)
 
     # If the file is not found, raise a 404 error with a description
@@ -41,9 +60,7 @@ def summarize():
     Returns:
         The generated summary.
     """
-    # Get the 'api_key' and 'looker_data' fields from the JSON payload
-    gemini_key = request.json.get('api_key', '')
-    data = request.json.get("looker_data")
+    data = request.json
 
     # Construct the prompt by concatenating a fixed string with the Markdown data
     prompt = "Write a one-paragraph summary interpreting the following data:\n\n"
@@ -63,9 +80,7 @@ def predict():
     Returns:
         The generated summary.
     """
-    # Get the 'api_key' and 'looker_data' fields from the JSON payload
-    gemini_key = request.json.get('api_key', '')
-    data = request.json.get("looker_data")
+    data = request.json
 
     # Construct the prompt by concatenating a fixed string with the Markdown data
     prompt = "Write a one-paragraph summary predicting the future using the following data : \n\n"
@@ -79,9 +94,8 @@ def predict():
 
 @app.route('/testmd', methods=['POST'])
 def testmd():
-    # Endpoint to test the data without using Gemini credits
-    gemini_key = request.json.get('api_key', '')
-    data = request.json.get("looker_data")
+    data = request.json
+
     prompt = "Write a one-paragraph summary interpreting the following data:\n\n"
     markdown = convert_looker_data_to_markdown(data)
 
@@ -90,3 +104,5 @@ def testmd():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+
+# Developed by Jeremy Juventin
