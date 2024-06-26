@@ -8,10 +8,10 @@ looker.plugins.visualizations.add({
       values: [
         { Summary: "summarize" },
         { Forecast: "predict" },
-        { "Show prompt": "showprompt" },
+        { "(Show prompt)": "showprompt" },
       ],
       display: "radio",
-      default: "testmd",
+      default: "summarize",
     },
   },
 
@@ -27,7 +27,7 @@ looker.plugins.visualizations.add({
             margin: 0 30px;
           }
           .hello-world-text {
-            font-size: 17px;
+            font-size: 15px;
             margin: auto;
             flex: 1;
           }
@@ -57,6 +57,7 @@ looker.plugins.visualizations.add({
     // Only update if data is not empty and dataHash has changed
     if (data.length > 0 && dataHash != this.datahash) {
       this.datahash = dataHash;
+      this._textElement.innerHTML = "";
       this.clearErrors();
 
       // Update displays
@@ -76,12 +77,14 @@ looker.plugins.visualizations.add({
       req.setRequestHeader("Content-Type", "application/json");
       req.send(JSON.stringify(queryResponse));
 
+      console.log(JSON.stringify(queryResponse));
+
       req.onreadystatechange = () => {
         if (req.readyState === 4) {
           if (req.status === 200) {
             var result = req.responseText;
           } else {
-            var result = "Error: " + req.responseText;
+            console.log("Error: " + req.responseText);
           }
 
           // Update content
