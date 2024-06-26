@@ -7,12 +7,15 @@ from vertexai.generative_models import GenerativeModel
 PROJECT_ID = os.environ.get('PROJECT_ID')
 
 
-def convert_to_bold(text):
-    """Converts text between double asterisks (**) to bold HTML tags."""
-    pattern = r'\*\*(.*?)\*\*'
-    result = re.sub(pattern, r'<b>\1</b>', text)
+def remove_noise(text):
+    text = re.sub("```html", "", text)
+    text = re.sub("```", "", text)
+    text = re.sub("##", "", text)
 
-    return result
+    # Converts text between double asterisks (**) to bold HTML tags.
+    text = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', text)
+
+    return text.strip()
 
 def generate_summary(prompt):
     """
@@ -30,7 +33,7 @@ def generate_summary(prompt):
     response = model.generate_content(prompt)
 
     # Sometimes, Gemini writes bold as **text**, so we need to convert that to HTML
-    result = convert_to_bold(response.text)
+    result = remove_noise(response.text)
     return result
 
 # Developed by Jeremy Juventin

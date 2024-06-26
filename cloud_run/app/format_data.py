@@ -81,7 +81,7 @@ def convert_looker_data_to_markdown(data: Dict[str, Dict[str, Any]]) -> str:
     data_list = data.get('data', [])
 
     header, footer = convert_fields_to_markdown(fields)
-    markdown_body = convert_data_to_markdown(data_list[-100:])
+    markdown_body = convert_data_to_markdown(data_list[:500])
 
     return header + markdown_body + footer
 
