@@ -6,7 +6,7 @@ from app.format_data import convert_looker_data_to_markdown
 from app.gemini import generate_summary
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app)
 
 
 @app.route('/')
@@ -63,7 +63,7 @@ def summarize():
     data = request.json
 
     # Construct the prompt by concatenating a fixed string with the Markdown data
-    prompt = "Write a one-paragraph summary interpreting the following data:\n\n"
+    prompt = "Write a one-paragraph summary interpreting the following data. Write it as an HTML paragraph with bold elements.\n\n"
     markdown = convert_looker_data_to_markdown(data)
 
     # Generate a summary using the prompt
@@ -83,7 +83,7 @@ def predict():
     data = request.json
 
     # Construct the prompt by concatenating a fixed string with the Markdown data
-    prompt = "Write a one-paragraph summary predicting the future using the following data : \n\n"
+    prompt = "Write a one-paragraph summary predicting the future using the following data. Write it as an HTML paragraph with bold elements.\n\n"
     markdown = convert_looker_data_to_markdown(data)
 
     # Generate a summary using the prompt
@@ -92,14 +92,18 @@ def predict():
     return r
 
 
-@app.route('/testmd', methods=['POST'])
-def testmd():
+@app.route('/showprompt', methods=['POST'])
+def showprompt():
     data = request.json
 
-    prompt = "Write a one-paragraph summary interpreting the following data:\n\n"
+    prompt = "Write a one-paragraph summary interpreting the following data. Write it as an HTML paragraph with bold elements.\n\n"
     markdown = convert_looker_data_to_markdown(data)
 
-    return prompt + markdown
+    result = prompt + markdown
+    # Replace all newlines with <br/> tags
+    result = result.replace('\n', '<br/>')
+
+    return result
 
 
 if __name__ == "__main__":
