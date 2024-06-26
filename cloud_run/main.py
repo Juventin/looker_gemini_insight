@@ -6,15 +6,23 @@ from app.format_data import convert_looker_data_to_markdown
 from app.gemini import generate_summary
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
+SUMMARIZE_PROMPT = """
+You’re an experienced data analyst who has been summarizing complex data sets into concise and insightful reports for various stakeholders. Your expertise lies in extracting key insights and trends from raw data to aid decision-making processes.\n
+Your task is to write a 4 sentence long summary interpreting the following data in an HTML paragraph, with bold tags on important elements if possible. Here is the data:\n\n
+"""
+PREDICT_PROMPT = """
+You’re an experienced data analyst with expertise in predicting future performances from diverse data sets. Your specialty lies in crafting insightful reports that highlight trends and future outcomes.\n
+Your task is to write a 4 sentence long summary predicting the future performances using the following data in an HTML paragraph, with bold tags on important elements if possible. Here is the data:\n\n
+"""
 
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
 
 
-@app.route('/source')
+@app.route('/source.js')
 def get_source():
     """
     Endpoint to send the JavaScript file 'looker_gemini_insight.js' for visualization.
@@ -61,14 +69,9 @@ def summarize():
         The generated summary.
     """
     data = request.json
-
-    # Construct the prompt by concatenating a fixed string with the Markdown data
-    prompt = "Write a one-paragraph summary interpreting the following data. Write it as an HTML paragraph with bold elements.\n\n"
     markdown = convert_looker_data_to_markdown(data)
 
-    # Generate a summary using the prompt
-    r = generate_summary(prompt + markdown)
-
+    r = generate_summary(SUMMARIZE_PROMPT + markdown)
     return r
 
 
@@ -81,25 +84,19 @@ def predict():
         The generated summary.
     """
     data = request.json
-
-    # Construct the prompt by concatenating a fixed string with the Markdown data
-    prompt = "Write a one-paragraph summary predicting the future using the following data. Write it as an HTML paragraph with bold elements.\n\n"
     markdown = convert_looker_data_to_markdown(data)
 
-    # Generate a summary using the prompt
-    r = generate_summary(prompt + markdown)
-
+    r = generate_summary(PREDICT_PROMPT + markdown)
     return r
 
 
 @app.route('/showprompt', methods=['POST'])
 def showprompt():
     data = request.json
-
-    prompt = "Write a one-paragraph summary interpreting the following data. Write it as an HTML paragraph with bold elements.\n\n"
     markdown = convert_looker_data_to_markdown(data)
 
-    result = prompt + markdown
+    result = SUMMARIZE_PROMPT + markdown
+
     # Replace all newlines with <br/> tags
     result = result.replace('\n', '<br/>')
 
