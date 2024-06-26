@@ -57,13 +57,13 @@ looker.plugins.visualizations.add({
     // Only update if data is not empty and dataHash has changed
     if (data.length > 0 && dataHash != this.datahash) {
       this.datahash = dataHash;
-      this._textElement.innerHTML = "";
+      this._textElement.innerHTML = "Loading ...";
       this.clearErrors();
 
       // Update displays
       if (config.prompt == "predict") {
         this._imgElement.innerHTML =
-          "<img src='https://gemini-insight-jht3hnrd2a-ew.a.run.app/fortune_teller.png' height='100%' />";
+          "<img src='https://gemini-insight-jht3hnrd2a-ew.a.run.app/fortune_teller.png' height='100%'/>";
       } else {
         this._imgElement.innerHTML = "";
       }
@@ -82,13 +82,11 @@ looker.plugins.visualizations.add({
       req.onreadystatechange = () => {
         if (req.readyState === 4) {
           if (req.status === 200) {
-            var result = req.responseText;
+            // Update content
+            this._textElement.innerHTML = req.responseText;
           } else {
             console.log("Error: " + req.responseText);
           }
-
-          // Update content
-          this._textElement.innerHTML = result;
         }
       };
 
