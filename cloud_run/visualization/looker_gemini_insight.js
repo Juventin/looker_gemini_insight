@@ -1,74 +1,111 @@
-//// SAMPLE HELLO WORLD VISUALIZATION
-
 looker.plugins.visualizations.add({
-  // Id and Label are legacy properties that no longer have any function besides documenting
-  // what the visualization used to have. The properties are now set via the manifest
-  // form within the admin/visualizations page of Looker
   id: "looker_gemini_insight",
   label: "Gemini Insight",
   options: {
-    font_size: {
+    prompt: {
       type: "string",
       label: "Prompt",
-      values: [{ Summary: "large" }, { Forecast: "small" }],
-      // TODO: Change values here
+      values: [
+        { Summary: "summarize" },
+        { Forecast: "predict" },
+        { "Show prompt": "showprompt" },
+      ],
       display: "radio",
-      default: "large",
+      default: "testmd",
     },
   },
-  // Set up the initial state of the visualization
+
   create: function (element, config) {
-    // Insert a <style> tag with some styles we'll use later.
     element.innerHTML = `
         <style>
           .hello-world-vis {
-            /* Vertical centering */
             height: 100%;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             text-align: center;
-          }
-          .hello-world-text-large {
-            font-size: 72px;
-          }
-          .hello-world-text-small {
             font-size: 18px;
+            font-family: sans-serif;
+            margin: 0 30px;
+          }
+          .hello-world-text {
+            font-size: 17px;
+            margin: auto;
+            flex: 1;
           }
         </style>
       `;
 
-    // Create a container element to let us center the text.
+    // Create containers and elements
     var container = element.appendChild(document.createElement("div"));
     container.className = "hello-world-vis";
 
-    // Create an element to contain the text.
+    this._imgElement = container.appendChild(document.createElement("div"));
     this._textElement = container.appendChild(document.createElement("div"));
+    this._textElement.className = "hello-world-text";
+
+    this.datahash = 0;
   },
+
   // Render in response to the data or settings changing
   updateAsync: function (data, element, config, queryResponse, details, done) {
-    // Clear any errors from previous updates
-    this.clearErrors();
-
-    // Grab the first cell of the data
-    // var firstRow = data[0];
-    // var firstCell = firstRow[queryResponse.fields.dimensions[0].name];
-
-    // Insert the data into the page
-    this._textElement.innerHTML =
-      LookerCharts.Utils.htmlForCell("Hello World!");
-
-    console.log(JSON.stringify(data));
-    console.log(JSON.stringify(queryResponse));
-
-    // Set the size to the user-selected size
-    if (config.font_size == "small") {
-      this._textElement.className = "hello-world-text-small";
+    // Compute data hash, to only update if prompt or data has changed
+    if (data.length > 0) {
+      var dataHash = this.stringToHash(config.prompt + JSON.stringify(data));
     } else {
-      this._textElement.className = "hello-world-text-large";
+      var dataHash = this.datahash;
     }
 
-    // We are done rendering! Let Looker know.
-    done();
+    // Only update if data is not empty and dataHash has changed
+    if (data.length > 0 && dataHash != this.datahash) {
+      this.datahash = dataHash;
+      this.clearErrors();
+
+      // Update displays
+      if (config.prompt == "predict") {
+        this._imgElement.innerHTML =
+          "<img src='https://gemini-insight-jht3hnrd2a-ew.a.run.app/fortune_teller.png' height='100%' />";
+      } else {
+        this._imgElement.innerHTML = "";
+      }
+
+      // Perform API POST request
+      var url =
+        "https://gemini-insight-jht3hnrd2a-ew.a.run.app/" + config.prompt;
+
+      var req = new XMLHttpRequest();
+      req.open("POST", url, true);
+      req.setRequestHeader("Content-Type", "application/json");
+      req.send(JSON.stringify(queryResponse));
+
+      req.onreadystatechange = () => {
+        if (req.readyState === 4) {
+          if (req.status === 200) {
+            var result = req.responseText;
+          } else {
+            var result = "Error: " + req.responseText;
+          }
+
+          // Update content
+          this._textElement.innerHTML = result;
+        }
+      };
+
+      done();
+    }
+  },
+
+  stringToHash: (string) => {
+    let hash = 0;
+
+    if (string.length == 0) return hash;
+
+    for (i = 0; i < string.length; i++) {
+      char = string.charCodeAt(i);
+      hash = (hash << 5) - hash + char;
+      hash = hash & hash;
+    }
+
+    return hash;
   },
 });
+
+// Developed by Jeremy Juventin
