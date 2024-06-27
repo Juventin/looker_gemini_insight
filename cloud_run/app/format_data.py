@@ -84,5 +84,3 @@ def convert_looker_data_to_markdown(data: Dict[str, Dict[str, Any]]) -> str:
     markdown_body = convert_data_to_markdown(data_list[:500])
 
     return header + markdown_body + footer
-
-# Developed by Jeremy Juventin

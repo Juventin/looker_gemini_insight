@@ -52,4 +52,4 @@ The Looker Gemini Insight uses GCP services, and the billing is associated with 
 
 ---
 
-Jeremy Juventin
+*Sunrise Team*

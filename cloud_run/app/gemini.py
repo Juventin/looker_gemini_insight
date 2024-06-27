@@ -35,5 +35,3 @@ def generate_summary(prompt):
     # Sometimes, Gemini writes bold as **text**, so we need to convert that to HTML
     result = remove_noise(response.text)
     return result
-
-# Developed by Jeremy Juventin
