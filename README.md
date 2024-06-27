@@ -2,24 +2,28 @@
 
 ## Overview
 
-Looker Gemini Insight is a custom visualization designed to harness the power of Gemini for advanced data analysis within Looker. This visualization aims to provide summarized interpretations and predictive insights based on selected dimensions and measures from your data.
+Looker Gemini Insight is a custom visualization designed to harness the power of Gemini for advanced data analysis within Looker. 
+
+This visualisation takes the dimensions and measures (and their metadata) that you have selected from your Explore to generate summarised interpretations and predictive insights with a single click.
+
+> With Gemini Insight on Looker, you can effortlessly summarise complex data sets and predict trends, empowering your business to make data-driven decisions.
 
 ### Key Features:
-- **Summarization:** Gain clear, concise summaries and interpretations of your data based on chosen dimensions and measures.
-- **Predictive Insights:** Utilize predictive analytics to forecast future trends and outcomes using the selected data dimensions and measures. 🔮
+- **✏️ Summarization:** Gain clear, concise summaries and interpretations of your data based on chosen dimensions and measures.
+- **🔮 Predictive Insights:** Utilize predictive analytics to forecast future trends and outcomes using the selected data dimensions and measures. 
 
 ### Requirements:
-- Dimensions and measures must be explicitly named and ideally include descriptions for accurate interpretation.
+- Dimensions and measures must be **explicitly named** and ideally include **descriptions** for accurate interpretation.
 - For time-based predictions, ensure your data includes a date or datetime dimension.
 
 ## Installation
 
 To install Looker Gemini Insight, follow these steps:
 
-### 1. Deploy Cloud Run
+### 1. Deploy the Cloud Run back-end
 
 1. **Navigate to the `cloud_run` directory** in the project repository.
-2. Create a `.env.yaml` file containing:
+2. **Create a `.env.yaml` file** containing:
    ```yaml
    PROJECT_ID: <YOUR_PROJECT_ID>
    ```
@@ -52,4 +56,4 @@ The Looker Gemini Insight uses GCP services, and the billing is associated with 
 
 ---
 
-*PrestaShop Team*
+*Developed for the Looker Hackathon (Vertex AI Edition) by the **PrestaShop Team***
