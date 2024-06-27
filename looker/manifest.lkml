@@ -1,5 +1,5 @@
 visualization: {
   id: "looker_gemini_insight"
   label: "Gemini Insight"
-  url: "https://gemini-insight-jht3hnrd2a-ew.a.run.app/source"
+  url: "https://<YOUR_CLOUD_RUN_URL>.run.app/source"
 }

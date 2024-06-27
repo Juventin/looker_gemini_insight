@@ -31,7 +31,7 @@ To install Looker Gemini Insight, follow these steps:
 
 ### 2. Integrate into Looker
 
-1. **Modify your Looker manifest** to include the custom visualization by adding the block from `looker/manifest.lookml` in your Looker project manifest file. Replace the url with the URL of your deployed Cloud Run service.
+1. **Modify your Looker manifest** to include the custom visualization by adding the block from `looker/manifest.lookml` in your Looker project manifest file. Replace `<YOUR_CLOUD_RUN_URL>` with the URL of your deployed Cloud Run service.
 
 2. **Save and deploy** your changes in Looker.
 
@@ -52,4 +52,4 @@ The Looker Gemini Insight uses GCP services, and the billing is associated with 
 
 ---
 
-*Sunrise Team*
+*PrestaShop Team*

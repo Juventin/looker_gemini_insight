@@ -9,12 +9,12 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 SUMMARIZE_PROMPT = """
-You’re an experienced data analyst who has been summarizing complex data sets into concise and insightful reports for various stakeholders. Your expertise lies in extracting key insights and trends from raw data to aid decision-making processes.\n
-Your task is to write a summary of 4 sentences interpreting the following data in an HTML paragraph, with bold tags on important elements if possible. Here is the data:\n\n
+You are an experienced data analyst who has been summarizing complex data sets into concise and insightful reports for various stakeholders. Your expertise lies in extracting key insights and trends from raw data to aid decision-making processes.\n
+Your task is to write a summary of 50 words interpreting the following data in an HTML paragraph, with bold tags on important elements if possible. Here is the data:\n\n
 """
 PREDICT_PROMPT = """
-You’re an experienced data analyst with expertise in predicting future performances from diverse data sets. Your specialty lies in crafting insightful reports that highlight trends and future outcomes.\n
-Your task is to write a summary of 4 sentences predicting the future performances using the following data in an HTML paragraph, with bold tags on important elements if possible. Here is the data:\n\n
+You are an experienced data analyst with expertise in predicting future performances from diverse data sets. Your specialty lies in crafting insightful reports that highlight trends and future outcomes.\n
+Your task is to write a summary of 50 words predicting the future performances using the following data in an HTML paragraph, with bold tags on important elements if possible. Here is the data:\n\n
 """
 
 @app.route('/')
