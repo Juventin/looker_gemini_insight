@@ -56,4 +56,12 @@ The Looker Gemini Insight uses GCP services, and the billing is associated with 
 
 ---
 
+## 🔗 Links
+
+- [Demo video](https://www.youtube.com/watch?v=mw-2q68RqFw)
+- [Demo slides](https://docs.google.com/presentation/d/1j6oT0jyhlEQ-FOplNH7we63KS4N70ydpaqhiJ14St3c/edit?usp=sharing)
+- [GitHub repository](https://github.com/Juventin/looker_gemini_insight)
+
+---
+
 *Developed for the Looker Hackathon (Vertex AI Edition) by the **PrestaShop Team***
