@@ -12,6 +12,8 @@ This visualisation takes the dimensions and measures (and their metadata) that y
 - **✏️ Summarization:** Gain clear, concise summaries and interpretations of your data based on chosen dimensions and measures.
 - **🔮 Predictive Insights:** Utilize predictive analytics to forecast future trends and outcomes using the selected data dimensions and measures. 
 
+![Example Image](https://media.licdn.com/dms/image/D4E22AQGrsF8GbgfHjQ/feedshare-shrink_1280/0/1719472826939?e=1722470400&v=beta&t=c0j7v_7wFs454Vk7jQTdHPGC_FK3RKA44UvdjAKQUA0)
+
 ### Requirements:
 - Dimensions and measures must be **explicitly named** and ideally include **descriptions** for accurate interpretation.
 - For time-based predictions, ensure your data includes a date or datetime dimension.
@@ -33,9 +35,9 @@ To install Looker Gemini Insight, follow these steps:
    ```
    Ensure you have the necessary permissions and billing is enabled on your GCP project.
 
-### 2. Integrate into Looker
+### 2. Integrate the Custom Visualization into Looker
 
-1. **Modify your Looker manifest** to include the custom visualization by adding the block from `looker/manifest.lookml` in your Looker project manifest file. Replace `<YOUR_CLOUD_RUN_URL>` with the URL of your deployed Cloud Run service.
+1. **Update your Looker manifest** to include the custom visualization by adding the block from `looker/manifest.lookml` in your Looker project manifest file. Replace `<YOUR_CLOUD_RUN_URL>` with the URL of your deployed Cloud Run service.
 
 2. **Save and deploy** your changes in Looker.
 
@@ -46,7 +48,7 @@ Once installed, you can start using the Looker Gemini Insight visualization in y
 1. **Select dimensions and measures** that you want to analyze.
 2. **Select the "Visualization" tab**.
 3. **Choose "Gemini Insight"** from the list of available visualizations.
-4. **Use the edit panel to chose between Summary or Forecast** and explore Gemini analytics capabilities to get useful insight or forecast future trends based on your data.
+4. *(Optional)* **Use the edit panel** to chose between Summary or Forecast.
 
 The Looker Gemini Insight visualization will automatically provide summarized interpretations or predictive insights based on the selected data.
 
