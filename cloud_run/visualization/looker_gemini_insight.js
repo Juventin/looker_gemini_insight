@@ -5,11 +5,7 @@ looker.plugins.visualizations.add({
     prompt: {
       type: "string",
       label: "Prompt",
-      values: [
-        { Summary: "summarize" },
-        { Forecast: "predict" },
-        { "(Show prompt)": "showprompt" },
-      ],
+      values: [{ Summary: "summarize" }, { Forecast: "predict" }],
       display: "radio",
       default: "summarize",
     },
@@ -109,4 +105,3 @@ looker.plugins.visualizations.add({
   },
 });
 
-// Developed by Jeremy Juventin
