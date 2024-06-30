@@ -76,11 +76,15 @@ def convert_looker_data_to_markdown(data: Dict[str, Dict[str, Any]]) -> str:
     Returns:
         str: Markdown table content.
     """
+    if len(data.get('fields', {}).get('pivots', [])) > 0:
+        raise Exception(
+            'Pivots not yet supported. Please use the pivoted dimension as a column.')
+
     fields = (data.get('fields', {}).get('dimensions', []) +
               data.get('fields', {}).get('measures', []))
-    data_list = data.get('data', [])
+    data_list = data.get('data', [])[:500]
 
     header, footer = convert_fields_to_markdown(fields)
-    markdown_body = convert_data_to_markdown(data_list[:500])
+    markdown_body = convert_data_to_markdown(data_list)
 
     return header + markdown_body + footer

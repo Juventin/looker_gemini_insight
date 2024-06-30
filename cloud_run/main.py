@@ -68,11 +68,15 @@ def summarize():
     Returns:
         The generated summary.
     """
-    data = request.json
-    markdown = convert_looker_data_to_markdown(data)
+    try:
+        data = request.json
+        markdown = convert_looker_data_to_markdown(data)
 
-    r = generate_summary(SUMMARIZE_PROMPT + markdown)
-    return r
+        r = generate_summary(SUMMARIZE_PROMPT + markdown)
+        return r
+
+    except Exception as e:
+        abort(400, description=e)
 
 
 @app.route('/predict', methods=['POST'])
@@ -83,25 +87,32 @@ def predict():
     Returns:
         The generated summary.
     """
-    data = request.json
-    markdown = convert_looker_data_to_markdown(data)
+    try:
+        data = request.json
+        markdown = convert_looker_data_to_markdown(data)
 
-    r = generate_summary(PREDICT_PROMPT + markdown)
-    return r
+        r = generate_summary(PREDICT_PROMPT + markdown)
+        return r
 
+    except Exception as e:
+        abort(400, description=e)
 
 @app.route('/showprompt', methods=['POST'])
 def showprompt():
-    data = request.json
-    markdown = convert_looker_data_to_markdown(data)
+    try:
+        data = request.json
+        markdown = convert_looker_data_to_markdown(data)
 
-    result = SUMMARIZE_PROMPT + markdown
+        result = SUMMARIZE_PROMPT + markdown
 
-    # Replace all newlines with <br/> tags
-    result = result.replace('\n', '<br/>')
+        # Replace all newlines with <br/> tags
+        # result = result.replace('\n', '<br/>')
 
-    return result
+        return result
+
+    except Exception as e:
+        abort(400, description=e)
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)), debug=True)

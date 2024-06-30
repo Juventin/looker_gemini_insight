@@ -14,7 +14,7 @@ looker.plugins.visualizations.add({
   create: function (element, config) {
     element.innerHTML = `
         <style>
-          .hello-world-vis {
+          .vis {
             height: 100%;
             display: flex;
             text-align: center;
@@ -22,7 +22,19 @@ looker.plugins.visualizations.add({
             font-family: sans-serif;
             margin: 0 30px;
           }
-          .hello-world-text {
+          .loading-text {
+            color: grey;
+            font-size: 15px;
+            margin: auto;
+            flex: 1;
+          }
+          .result-text {
+            font-size: 15px;
+            margin: auto;
+            flex: 1;
+          }
+          .error-text {
+            color: #F46D61;
             font-size: 15px;
             margin: auto;
             flex: 1;
@@ -32,11 +44,11 @@ looker.plugins.visualizations.add({
 
     // Create containers and elements
     var container = element.appendChild(document.createElement("div"));
-    container.className = "hello-world-vis";
+    container.className = "vis";
 
     this._imgElement = container.appendChild(document.createElement("div"));
     this._textElement = container.appendChild(document.createElement("div"));
-    this._textElement.className = "hello-world-text";
+    this._textElement.className = "result-text";
 
     this.datahash = 0;
   },
@@ -53,20 +65,21 @@ looker.plugins.visualizations.add({
     // Only update if data is not empty and dataHash has changed
     if (data.length > 0 && dataHash != this.datahash) {
       this.datahash = dataHash;
+      this._textElement.className = "loading-text";
       this._textElement.innerHTML = "Loading ...";
       this.clearErrors();
 
       // Update displays
       if (config.prompt == "predict") {
         this._imgElement.innerHTML =
-          "<img src='https://gemini-insight-jht3hnrd2a-ew.a.run.app/fortune_teller.png' height='100%'/>";
+          "<img src='https://gemini-insight-tuhh6xqlaa-ew.a.run.app/fortune_teller.png' height='100%'/>";
       } else {
         this._imgElement.innerHTML = "";
       }
 
       // Perform API POST request
       var url =
-        "https://gemini-insight-jht3hnrd2a-ew.a.run.app/" + config.prompt;
+        "https://gemini-insight-tuhh6xqlaa-ew.a.run.app/" + config.prompt;
 
       var req = new XMLHttpRequest();
       req.open("POST", url, true);
@@ -79,9 +92,11 @@ looker.plugins.visualizations.add({
         if (req.readyState === 4) {
           if (req.status === 200) {
             // Update content
+            this._textElement.className = "result-text";
             this._textElement.innerHTML = req.responseText;
           } else {
-            console.log("Error: " + req.responseText);
+            this._textElement.className = "error-text";
+            this._textElement.innerHTML = "Error: " + req.responseText;
           }
         }
       };
@@ -104,4 +119,3 @@ looker.plugins.visualizations.add({
     return hash;
   },
 });
-
