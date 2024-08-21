@@ -10,9 +10,9 @@ This visualisation takes the dimensions and measures (and their metadata) that y
 
 ### Key Features:
 - **✏️ Summarization:** Gain clear, concise summaries and interpretations of your data based on chosen dimensions and measures.
-- **🔮 Predictive Insights:** Utilize predictive analytics to forecast future trends and outcomes using the selected data dimensions and measures. 
+- **🔮 Predictive Insights:** Utilize predictive analytics to forecast future trends and outcomes using the selected data dimensions and measures.
 
-![Example Image](https://media.licdn.com/dms/image/D4E22AQGrsF8GbgfHjQ/feedshare-shrink_1280/0/1719472826939?e=1722470400&v=beta&t=c0j7v_7wFs454Vk7jQTdHPGC_FK3RKA44UvdjAKQUA0)
+![Example Image](https://github.com/user-attachments/assets/b040cba4-68cb-4792-9bc1-f092edacd267)
 
 ### Requirements:
 - Dimensions and measures must be **explicitly named** and ideally include **descriptions** for accurate interpretation.
