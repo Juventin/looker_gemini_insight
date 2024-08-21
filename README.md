@@ -58,6 +58,28 @@ The Looker Gemini Insight uses GCP services, and the billing is associated with 
 
 ---
 
+## FAQ
+
+<details>
+  <summary>Is there a way to verify the server is running correctly?</summary>
+
+  Yes, you will get 'Hello, World!' message on `https://<YOUR_CLOUD_RUN_URL>.run.app/`.
+</details>
+
+<details>
+  <summary>Does the server allow unauthenticated invocations?</summary>
+  
+  Yes
+</details>
+
+<details>
+  <summary>How can we automatically roll back (clan up) the resources created by this repo?</summary>
+  
+  The Terraform configuration will soon be available.
+</details>
+
+---
+
 ## 🔗 Links
 
 - [Demo video](https://www.youtube.com/watch?v=mw-2q68RqFw)
