@@ -1,5 +1,5 @@
 import os
-from flask import Flask, send_file, abort, request
+from flask import Flask, send_file, abort, request, Response
 from flask_cors import CORS
 
 from app.format_data import convert_looker_data_to_markdown
@@ -34,7 +34,16 @@ def get_source():
     file_path = 'visualization/looker_gemini_insight.js'
 
     try:
-        return send_file(file_path)
+        basedir = os.path.abspath(os.path.dirname(__file__))
+        filepath = os.path.join(basedir, file_path)
+
+        # Read file and replace <YOUR_CLOUD_RUN_URL> with request.url_root
+        with open(filepath, 'r') as f:
+            content = f.read()
+            content = content.replace('<CLOUD_RUN_URL>', request.url_root)
+
+            return Response(content, mimetype='text/javascript')
+
 
     # If the file is not found, raise a 404 error with a description
     except FileNotFoundError:

@@ -1,3 +1,5 @@
+const CLOUD_RUN_URL = "<CLOUD_RUN_URL>"; // Automatically overridden by the server
+
 looker.plugins.visualizations.add({
   id: "looker_gemini_insight",
   label: "Gemini Insight",
@@ -72,14 +74,13 @@ looker.plugins.visualizations.add({
       // Update displays
       if (config.prompt == "predict") {
         this._imgElement.innerHTML =
-          "<img src='https://gemini-insight-tuhh6xqlaa-ew.a.run.app/fortune_teller.png' height='100%'/>";
+          "<img src='" + CLOUD_RUN_URL + "fortune_teller.png' height='100%'/>";
       } else {
         this._imgElement.innerHTML = "";
       }
 
       // Perform API POST request
-      var url =
-        "https://gemini-insight-tuhh6xqlaa-ew.a.run.app/" + config.prompt;
+      var url = CLOUD_RUN_URL + config.prompt;
 
       var req = new XMLHttpRequest();
       req.open("POST", url, true);
