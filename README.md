@@ -75,7 +75,11 @@ The Looker Gemini Insight uses GCP services, and the billing is associated with 
 <details>
   <summary>How can we automatically roll back (clan up) the resources created by this repo?</summary>
   
-  The Terraform configuration will soon be available.
+  *The Terraform configuration will soon be available.*
+  
+  The resources created are :
+   - looker-gemini-insight Cloud Run : https://console.cloud.google.com/run?project=<PROJECT_ID>
+   - looker-gemini-insight Artifact : https://console.cloud.google.com/artifacts/docker/<PROJECT_ID>/europe-west1/cloud-run-source-deploy?project=<PROJECT_ID>
 </details>
 
 ---
