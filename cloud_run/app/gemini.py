@@ -25,13 +25,16 @@ def generate_summary(prompt):
         prompt (str): The prompt to generate a summary for.
 
     Returns:
-        str: The generated summary.
+        str: The generated summary. Limited to 5 sentences.
     """
     vertexai.init(project=PROJECT_ID, location="europe-west1")
     model = GenerativeModel(model_name="gemini-1.0-pro-002")
 
     response = model.generate_content(prompt)
 
+    # Limit response to the first 5 sentences
+    response = '.'.join(response.text.split('.')[:5])
+
     # Sometimes, Gemini writes bold as **text**, so we need to convert that to HTML
-    result = remove_noise(response.text)
+    result = remove_noise(response)
     return result
