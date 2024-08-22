@@ -41,6 +41,37 @@ looker.plugins.visualizations.add({
             margin: auto;
             flex: 1;
           }
+
+          .custom-loader {
+              width: 70px;
+              height: 70px;
+              display: grid;
+              margin: auto;
+          }
+          .custom-loader::before,
+          .custom-loader::after {    
+              content:"";
+              grid-area: 1/1;
+              --c: radial-gradient(farthest-side,#69c3d8 92%,#0000);
+              background: 
+                var(--c) 50%  0, 
+                var(--c) 50%  100%, 
+                var(--c) 100% 50%, 
+                var(--c) 0    50%;
+              background-size: 12px 12px;
+              background-repeat: no-repeat;
+              animation: s2 1s infinite;
+          }
+          .custom-loader::before {
+            margin:4px;
+            filter:hue-rotate(35deg);
+            background-size: 8px 8px;
+            animation-timing-function: linear
+          }
+
+          @keyframes s2{ 
+            100%{transform: rotate(.5turn)}
+          }
         </style>
       `;
 
@@ -51,6 +82,7 @@ looker.plugins.visualizations.add({
     this._imgElement = container.appendChild(document.createElement("div"));
     this._textElement = container.appendChild(document.createElement("div"));
     this._textElement.className = "result-text";
+    this._textElement.innerHTML = "<div class='custom-loader'></div>";
 
     this.datahash = 0;
   },
@@ -58,17 +90,21 @@ looker.plugins.visualizations.add({
   // Render in response to the data or settings changing
   updateAsync: function (data, element, config, queryResponse, details, done) {
     // Compute data hash, to only update if prompt or data has changed
-    if (data.length > 0) {
+    if (data.length > 0 && typeof config.prompt !== "undefined") {
       var dataHash = this.stringToHash(config.prompt + JSON.stringify(data));
     } else {
       var dataHash = this.datahash;
     }
 
     // Only update if data is not empty and dataHash has changed
-    if (data.length > 0 && dataHash != this.datahash) {
+    if (
+      data.length > 0 &&
+      dataHash != this.datahash &&
+      typeof config.prompt !== "undefined"
+    ) {
       this.datahash = dataHash;
       this._textElement.className = "loading-text";
-      this._textElement.innerHTML = "Loading ...";
+      this._textElement.innerHTML = "<div class='custom-loader'></div>";
       this.clearErrors();
 
       // Update displays
@@ -86,8 +122,6 @@ looker.plugins.visualizations.add({
       req.open("POST", url, true);
       req.setRequestHeader("Content-Type", "application/json");
       req.send(JSON.stringify(queryResponse));
-
-      console.log(JSON.stringify(queryResponse));
 
       req.onreadystatechange = () => {
         if (req.readyState === 4) {
