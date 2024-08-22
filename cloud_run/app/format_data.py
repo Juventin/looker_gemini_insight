@@ -69,6 +69,7 @@ def convert_fields_to_markdown(fields: List[Dict[str, Any]]) -> Tuple[str, str]:
 def convert_looker_data_to_markdown(data: Dict[str, Dict[str, Any]]) -> str:
     """
     Converts Looker API JSON data to Markdown table.
+    Limits the data to 500 rows and 10000 characters.
 
     Args:
         data (Dict[str, Dict[str, Any]]): Looker API JSON data.
@@ -87,4 +88,4 @@ def convert_looker_data_to_markdown(data: Dict[str, Dict[str, Any]]) -> str:
     header, footer = convert_fields_to_markdown(fields)
     markdown_body = convert_data_to_markdown(data_list)
 
-    return header + markdown_body + footer
+    return header + markdown_body[:10000] + footer
