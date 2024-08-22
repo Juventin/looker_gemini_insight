@@ -32,6 +32,7 @@ def get_source():
         If the file is not found, returns a 404 error with a description.
     """
     file_path = 'visualization/looker_gemini_insight.js'
+    cloud_run_url = request.url_root.replace('http://', 'https://')
 
     try:
         basedir = os.path.abspath(os.path.dirname(__file__))
@@ -40,7 +41,7 @@ def get_source():
         # Read file and replace <YOUR_CLOUD_RUN_URL> with request.url_root
         with open(filepath, 'r') as f:
             content = f.read()
-            content = content.replace('<CLOUD_RUN_URL>', request.url_root)
+            content = content.replace('<CLOUD_RUN_URL>', cloud_run_url)
 
             return Response(content, mimetype='text/javascript')
 
