@@ -80,6 +80,7 @@ The Looker Gemini Insight uses GCP services, and the billing is associated with 
   The resources created are :
    - looker-gemini-insight Cloud Run : https://console.cloud.google.com/run?project=<PROJECT_ID>
    - looker-gemini-insight Artifact : https://console.cloud.google.com/artifacts/docker/<PROJECT_ID>/europe-west1/cloud-run-source-deploy?project=<PROJECT_ID>
+   - Cloud Build Storage bucket : https://console.cloud.google.com/storage/browser/<PROJECT_ID>_cloudbuild?project=<PROJECT_ID>
 </details>
 
 ---
