@@ -33,7 +33,7 @@ def split_sentences(text: str) -> list:
     sentence_splitter = re.compile(r'(?<!\d)\.(?![\d,-])|(?<=[!?])')
 
     sentences = sentence_splitter.split(text)
-    sentences = [sentence.strip()
+    sentences = [sentence.strip()+'.'
                  for sentence in sentences if sentence.strip()]
 
     return sentences
@@ -55,7 +55,7 @@ def generate_summary(prompt: str) -> str:
     response = model.generate_content(prompt)
 
     # Limit response to the first 5 sentences
-    response = '. '.join(split_sentences(response.text)[:5])+'.'
+    response = ' '.join(split_sentences(response.text)[:5])
 
     # Sometimes, Gemini writes bold as **text**, so we need to convert that to HTML
     result = remove_noise(response)
