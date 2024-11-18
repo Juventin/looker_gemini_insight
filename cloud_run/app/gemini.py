@@ -7,7 +7,7 @@ from vertexai.generative_models import GenerativeModel
 PROJECT_ID = os.environ.get('PROJECT_ID')
 
 
-def remove_noise(text):
+def remove_noise(text: str) -> str:
     text = re.sub("```html", "", text)
     text = re.sub("```", "", text)
     text = re.sub("##", "", text)
@@ -18,12 +18,12 @@ def remove_noise(text):
     return text.strip()
 
 
-def split_sentences(text):
+def split_sentences(text: str) -> list:
     """
     Splits a given text into individual sentences.
     This function uses a regular expression to split the text at periods, exclamation marks,
     and question marks, while ensuring that decimal numbers are not split.
-    
+
     Args:
         text (str): The input text to be split into sentences.
     Returns:
@@ -38,7 +38,8 @@ def split_sentences(text):
 
     return sentences
 
-def generate_summary(prompt):
+
+def generate_summary(prompt: str) -> str:
     """
     Generate a summary of the given prompt using the Vertex AI Generative Model.
 
