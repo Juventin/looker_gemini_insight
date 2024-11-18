@@ -52,8 +52,9 @@ def convert_fields_to_markdown(fields: List[Dict[str, Any]]) -> Tuple[str, str]:
         header_labels.append(clean_label)
 
         description = field.get('description', '')
+        expression = field.get('expression', '')
         if description:
-            markdown_footer += f"* {label} = {description}\n"
+            markdown_footer += f"* {label} = {description} {expression}\n"
 
     # Append header labels to Markdown
     markdown_header += " | ".join(header_labels) + " |\n"
@@ -82,7 +83,9 @@ def convert_looker_data_to_markdown(data: Dict[str, Dict[str, Any]]) -> str:
             'Pivots not yet supported. Please use the pivoted dimension as a column.')
 
     fields = (data.get('fields', {}).get('dimensions', []) +
-              data.get('fields', {}).get('measures', []))
+              data.get('fields', {}).get('measures', []) +
+              data.get('fields', {}).get('table_calculations', [])
+              )
     data_list = data.get('data', [])[:500]
 
     header, footer = convert_fields_to_markdown(fields)
