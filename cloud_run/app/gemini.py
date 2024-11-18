@@ -17,6 +17,27 @@ def remove_noise(text):
 
     return text.strip()
 
+
+def split_sentences(text):
+    """
+    Splits a given text into individual sentences.
+    This function uses a regular expression to split the text at periods, exclamation marks,
+    and question marks, while ensuring that decimal numbers are not split.
+    
+    Args:
+        text (str): The input text to be split into sentences.
+    Returns:
+        list: A list of sentences extracted from the input text, with leading and trailing
+              whitespace removed from each sentence.
+    """
+    sentence_splitter = re.compile(r'(?<!\d)\.(?![\d,-])|(?<=[!?])')
+
+    sentences = sentence_splitter.split(text)
+    sentences = [sentence.strip()
+                 for sentence in sentences if sentence.strip()]
+
+    return sentences
+
 def generate_summary(prompt):
     """
     Generate a summary of the given prompt using the Vertex AI Generative Model.
@@ -33,7 +54,7 @@ def generate_summary(prompt):
     response = model.generate_content(prompt)
 
     # Limit response to the first 5 sentences
-    response = '.'.join(response.text.split('.')[:5])
+    response = '. '.join(split_sentences(response.text)[:5])+'.'
 
     # Sometimes, Gemini writes bold as **text**, so we need to convert that to HTML
     result = remove_noise(response)
