@@ -7,6 +7,8 @@ Looker Gemini Insight is a custom visualization designed to harness the power of
 This visualisation takes the dimensions and measures (and their metadata) that you have selected from your Explore to generate summarised interpretations and predictive insights with a single click.
 
 > With Gemini Insight on Looker, you can effortlessly summarise complex data sets and predict trends, empowering your business to make data-driven decisions.
+>
+> Looker Gemini Insight is designed to make data interpretation accessible for users who may not have a background in analytics, allowing non-technical users to understand advanced reports and grasp key trends at a glance.
 
 ### Key Features:
 - **✏️ Summarization:** Gain clear, concise summaries and interpretations of your data based on chosen dimensions and measures.
@@ -90,6 +92,7 @@ The Looker Gemini Insight uses GCP services, and the billing is associated with 
 - [Demo video](https://www.youtube.com/watch?v=mw-2q68RqFw)
 - [Demo slides](https://docs.google.com/presentation/d/1j6oT0jyhlEQ-FOplNH7we63KS4N70ydpaqhiJ14St3c/edit?usp=sharing)
 - [GitHub repository](https://github.com/Juventin/looker_gemini_insight)
+- [Medium Article](https://medium.com/@j.juventin/unlock-the-power-of-ai-in-your-looker-dashboards-with-gemini-insight-24d3969b716f)
 
 ---
 
